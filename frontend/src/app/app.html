@@ -1,0 +1,21 @@
+<nav class="navbar">
+  <div class="container navbar-content">
+    <a routerLink="/" class="brand">LaraAng <span class="brand-light">Workspace</span></a>
+    
+    <div class="nav-links">
+      <ng-container *ngIf="authService.isAuthenticated$ | async; else unauth">
+        <a routerLink="/products" routerLinkActive="active" class="nav-link">Products</a>
+        <button (click)="logout()" class="btn btn-secondary ml">Logout</button>
+      </ng-container>
+      
+      <ng-template #unauth>
+        <a routerLink="/login" routerLinkActive="active" class="nav-link">Login</a>
+        <a routerLink="/register" class="btn btn-primary ml">Get Started</a>
+      </ng-template>
+    </div>
+  </div>
+</nav>
+
+<main class="container main-content">
+  <router-outlet></router-outlet>
+</main>

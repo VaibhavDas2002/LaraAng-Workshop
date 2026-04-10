@@ -1,0 +1,82 @@
+/* Font loaded via index.html <link> tag */
+
+/* ─── Design Tokens ──────────────────────────────────────────────── */
+:root {
+  --primary:        #4F46E5;
+  --primary-light:  #818cf8;
+  --primary-glow:   rgba(79, 70, 229, 0.4);
+  --surface-1:      #0F172A;
+  --surface-2:      #1E293B;
+  --surface-3:      #334155;
+  --text-1:         #F8FAFC;
+  --text-2:         #CBD5E1;
+  --text-3:         #64748B;
+  /* Aliases used by some components */
+  --text-main:      #F8FAFC;
+  --text-muted:     #94A3B8;
+  --border:         rgba(51, 65, 85, 0.7);
+  --red:            #EF4444;
+  --green:          #10B981;
+  --radius-sm:      8px;
+  --radius-md:      12px;
+  --radius-lg:      20px;
+  --shadow-card:    0 20px 40px -12px rgba(0, 0, 0, 0.5);
+  --transition:     all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Gradient text utility */
+.gradient-text {
+  background: linear-gradient(135deg, #a5b4fc 0%, #818cf8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─── Reset ──────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: var(--surface-1);
+  color: var(--text-1);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Background gradient blobs */
+body::before {
+  content: '';
+  position: fixed;
+  top: -200px;
+  right: -200px;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(79,70,229,0.12) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  bottom: -200px;
+  left: -100px;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(16,185,129,0.07) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ─── Layout ─────────────────────────────────────────────────────── */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  position: relative;
+  z-index: 1;
+}

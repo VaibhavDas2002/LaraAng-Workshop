@@ -1,0 +1,47 @@
+<div class="page-header">
+  <div>
+    <a routerLink="/products" class="back-link">← Back to Products</a>
+    <h1 class="gradient-text">{{ isEditMode ? 'Edit Product' : 'Add New Product' }}</h1>
+  </div>
+</div>
+
+<div class="glass-panel form-container">
+  <div *ngIf="loading && !isEditMode" class="loading-state">
+    Loading...
+  </div>
+
+  <div *ngIf="error" class="alert-error">
+    {{ error }}
+  </div>
+
+  <form [formGroup]="productForm" (ngSubmit)="onSubmit()" *ngIf="!loading || isEditMode">
+    <div class="form-grid">
+      <div class="form-group full-width">
+        <label class="form-label">Product Name</label>
+        <input type="text" class="form-control" formControlName="name" placeholder="e.g. Wireless Headphones">
+      </div>
+
+      <div class="form-group full-width">
+        <label class="form-label">Description</label>
+        <textarea class="form-control" formControlName="description" rows="4" placeholder="Brief description of the product..."></textarea>
+      </div>
+
+      <div class="form-group half-width">
+        <label class="form-label">Price ($)</label>
+        <input type="number" class="form-control" formControlName="price" step="0.01" placeholder="99.99">
+      </div>
+
+      <div class="form-group half-width">
+        <label class="form-label">Stock Quantity</label>
+        <input type="number" class="form-control" formControlName="stock" placeholder="100">
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <a routerLink="/products" class="btn btn-secondary m-r">Cancel</a>
+      <button type="submit" class="btn btn-primary" [disabled]="productForm.invalid || loading">
+        {{ isEditMode ? 'Update Product' : 'Create Product' }}
+      </button>
+    </div>
+  </form>
+</div>
