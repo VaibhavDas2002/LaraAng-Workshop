@@ -6,7 +6,9 @@
       <p class="auth-subtitle">Join and manage your products today.</p>
     </div>
 
-    <div class="alert-error" *ngIf="error">{{ error }}</div>
+    @if (error) {
+      <div class="alert-error">{{ error }}</div>
+    }
 
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
@@ -14,9 +16,9 @@
         <input type="text" class="form-control" formControlName="name"
                placeholder="John Doe" id="reg-name"
                [class.input-error]="registerForm.get('name')?.invalid && registerForm.get('name')?.touched">
-        <p class="field-error" *ngIf="registerForm.get('name')?.errors?.['required'] && registerForm.get('name')?.touched">
-          Full name is required.
-        </p>
+        @if (registerForm.get('name')?.errors?.['required'] && registerForm.get('name')?.touched) {
+          <p class="field-error">Full name is required.</p>
+        }
       </div>
 
       <div class="form-group">
@@ -24,12 +26,12 @@
         <input type="email" class="form-control" formControlName="email"
                placeholder="john@example.com" id="reg-email"
                [class.input-error]="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
-        <p class="field-error" *ngIf="registerForm.get('email')?.errors?.['required'] && registerForm.get('email')?.touched">
-          Email is required.
-        </p>
-        <p class="field-error" *ngIf="registerForm.get('email')?.errors?.['email'] && registerForm.get('email')?.touched">
-          Please enter a valid email address.
-        </p>
+        @if (registerForm.get('email')?.errors?.['required'] && registerForm.get('email')?.touched) {
+          <p class="field-error">Email is required.</p>
+        }
+        @if (registerForm.get('email')?.errors?.['email'] && registerForm.get('email')?.touched) {
+          <p class="field-error">Please enter a valid email address.</p>
+        }
       </div>
 
       <div class="form-group">
@@ -37,12 +39,12 @@
         <input type="password" class="form-control" formControlName="password"
                placeholder="Min. 6 characters" id="reg-password"
                [class.input-error]="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
-        <p class="field-error" *ngIf="registerForm.get('password')?.errors?.['required'] && registerForm.get('password')?.touched">
-          Password is required.
-        </p>
-        <p class="field-error" *ngIf="registerForm.get('password')?.errors?.['minlength'] && registerForm.get('password')?.touched">
-          Password must be at least 6 characters.
-        </p>
+        @if (registerForm.get('password')?.errors?.['required'] && registerForm.get('password')?.touched) {
+          <p class="field-error">Password is required.</p>
+        }
+        @if (registerForm.get('password')?.errors?.['minlength'] && registerForm.get('password')?.touched) {
+          <p class="field-error">Password must be at least 6 characters.</p>
+        }
       </div>
 
       <div class="form-group">
@@ -50,15 +52,15 @@
         <input type="password" class="form-control" formControlName="password_confirmation"
                placeholder="Repeat password" id="reg-confirm"
                [class.input-error]="registerForm.errors?.['mismatch'] && registerForm.get('password_confirmation')?.touched">
-        <p class="field-error" *ngIf="registerForm.errors?.['mismatch'] && registerForm.get('password_confirmation')?.touched">
-          Passwords do not match.
-        </p>
+        @if (registerForm.errors?.['mismatch'] && registerForm.get('password_confirmation')?.touched) {
+          <p class="field-error">Passwords do not match.</p>
+        }
       </div>
 
       <button type="submit" id="reg-submit" class="btn btn-primary btn-block"
               [disabled]="registerForm.invalid || loading">
-        <span *ngIf="!loading">Create Account &rarr;</span>
-        <span *ngIf="loading">Creating...</span>
+        @if (!loading) { <span>Create Account &rarr;</span> }
+        @if (loading)  { <span>Creating...</span> }
       </button>
     </form>
 

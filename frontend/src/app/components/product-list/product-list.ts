@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { DecimalPipe, DatePipe } from '@angular/common';
 import { Product, ProductService } from '../../services/product.service';
-import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-product-list',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [RouterLink, DecimalPipe, DatePipe],
   templateUrl: './product-list.html',
   styleUrl: './product-list.css'
 })

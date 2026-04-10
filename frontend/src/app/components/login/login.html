@@ -6,7 +6,9 @@
       <p class="auth-subtitle">Log in to manage your inventory.</p>
     </div>
 
-    <div class="alert-error" *ngIf="error">{{ error }}</div>
+    @if (error) {
+      <div class="alert-error">{{ error }}</div>
+    }
 
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
@@ -14,12 +16,12 @@
         <input type="email" class="form-control" formControlName="email"
                placeholder="john@example.com" id="login-email"
                [class.input-error]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
-        <p class="field-error" *ngIf="loginForm.get('email')?.errors?.['required'] && loginForm.get('email')?.touched">
-          Email is required.
-        </p>
-        <p class="field-error" *ngIf="loginForm.get('email')?.errors?.['email'] && loginForm.get('email')?.touched">
-          Please enter a valid email address.
-        </p>
+        @if (loginForm.get('email')?.errors?.['required'] && loginForm.get('email')?.touched) {
+          <p class="field-error">Email is required.</p>
+        }
+        @if (loginForm.get('email')?.errors?.['email'] && loginForm.get('email')?.touched) {
+          <p class="field-error">Please enter a valid email address.</p>
+        }
       </div>
 
       <div class="form-group">
@@ -27,15 +29,15 @@
         <input type="password" class="form-control" formControlName="password"
                placeholder="••••••••" id="login-password"
                [class.input-error]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
-        <p class="field-error" *ngIf="loginForm.get('password')?.errors?.['required'] && loginForm.get('password')?.touched">
-          Password is required.
-        </p>
+        @if (loginForm.get('password')?.errors?.['required'] && loginForm.get('password')?.touched) {
+          <p class="field-error">Password is required.</p>
+        }
       </div>
 
       <button type="submit" id="login-submit" class="btn btn-primary btn-block"
               [disabled]="loginForm.invalid || loading">
-        <span *ngIf="!loading">Log In &rarr;</span>
-        <span *ngIf="loading">Authenticating...</span>
+        @if (!loading) { <span>Log In &rarr;</span> }
+        @if (loading)  { <span>Authenticating...</span> }
       </button>
     </form>
 

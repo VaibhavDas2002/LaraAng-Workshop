@@ -7,7 +7,9 @@
     <a routerLink="/products/create" id="add-product-btn" class="btn btn-primary">+ Add Product</a>
   </div>
 
-  <div class="alert-error" *ngIf="error">{{ error }}</div>
+  @if (error) {
+    <div class="alert-error">{{ error }}</div>
+  }
 
   <div class="datatable-card">
     <div class="datatable-toolbar">
@@ -15,7 +17,9 @@
         <span class="search-icon">🔍</span>
         <input type="text" class="search-input" placeholder="Search products..." (input)="onSearch($event)" id="product-search">
       </div>
-      <span class="record-count" *ngIf="!loading">{{ filteredProducts.length }} records</span>
+      @if (!loading) {
+        <span class="record-count">{{ filteredProducts.length }} records</span>
+      }
     </div>
 
     <div class="table-wrap">
@@ -32,35 +36,41 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngIf="loading">
-            <td colspan="7" class="state-cell">
-              <div class="loading-dots"><span></span><span></span><span></span></div>
-              Loading products...
-            </td>
-          </tr>
-          <tr *ngIf="!loading && filteredProducts.length === 0">
-            <td colspan="7" class="state-cell">
-              <div class="empty-icon">📦</div>
-              <p>No products found.</p>
-              <a routerLink="/products/create" class="btn btn-primary" style="margin-top:1rem">Add your first product</a>
-            </td>
-          </tr>
-          <tr *ngFor="let product of filteredProducts; let i = index" class="table-row">
-            <td class="col-id">{{ product.id }}</td>
-            <td class="col-name">{{ product.name }}</td>
-            <td class="col-desc">{{ product.description || '—' }}</td>
-            <td class="col-price">${{ product.price | number:'1.2-2' }}</td>
-            <td class="col-stock">
-              <span class="badge" [class.badge-success]="product.stock > 0" [class.badge-danger]="product.stock === 0">
-                {{ product.stock > 0 ? product.stock + ' in stock' : 'Out of stock' }}
-              </span>
-            </td>
-            <td class="col-date text-muted">{{ product.created_at | date:'mediumDate' }}</td>
-            <td class="col-actions">
-              <a [routerLink]="['/products/edit', product.id]" class="btn btn-sm btn-edit">Edit</a>
-              <button (click)="deleteProduct(product.id)" class="btn btn-sm btn-del">Delete</button>
-            </td>
-          </tr>
+          @if (loading) {
+            <tr>
+              <td colspan="7" class="state-cell">
+                <div class="loading-dots"><span></span><span></span><span></span></div>
+                Loading products...
+              </td>
+            </tr>
+          }
+          @if (!loading && filteredProducts.length === 0) {
+            <tr>
+              <td colspan="7" class="state-cell">
+                <div class="empty-icon">📦</div>
+                <p>No products found.</p>
+                <a routerLink="/products/create" class="btn btn-primary" style="margin-top:1rem">Add your first product</a>
+              </td>
+            </tr>
+          }
+          @for (product of filteredProducts; track product.id) {
+            <tr class="table-row">
+              <td class="col-id">{{ product.id }}</td>
+              <td class="col-name">{{ product.name }}</td>
+              <td class="col-desc">{{ product.description || '—' }}</td>
+              <td class="col-price">${{ product.price | number:'1.2-2' }}</td>
+              <td class="col-stock">
+                <span class="badge" [class.badge-success]="product.stock > 0" [class.badge-danger]="product.stock === 0">
+                  {{ product.stock > 0 ? product.stock + ' in stock' : 'Out of stock' }}
+                </span>
+              </td>
+              <td class="col-date text-muted">{{ product.created_at | date:'mediumDate' }}</td>
+              <td class="col-actions">
+                <a [routerLink]="['/products/edit', product.id]" class="btn btn-sm btn-edit">Edit</a>
+                <button (click)="deleteProduct(product.id)" class="btn btn-sm btn-del">Delete</button>
+              </td>
+            </tr>
+          }
         </tbody>
       </table>
     </div>
